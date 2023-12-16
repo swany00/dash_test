@@ -108,7 +108,7 @@ tidydata3 = df_feature_small2.assign(
     speed_cut = pd.qcut(df_feature_small2.speed,4,)
 ).sort_values('speed_cut')
 fig3 = px.line_mapbox(
-    data_frame=tidydata,
+    data_frame=tidydata3,
     lat = 'latitude',
     lon = 'longitude',
     line_group = 'id',
