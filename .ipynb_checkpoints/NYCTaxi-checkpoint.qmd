@@ -10,7 +10,6 @@ execute:
 
 ```{python}
 #| output: false
-# 여기에 온갖코드를 넣음.
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -36,18 +35,15 @@ df = pd.read_csv("https://raw.githubusercontent.com/guebin/DV2023/main/posts/NYC
     dayofweek = lambda df: df.pickup_datetime.dt.dayofweek
 )
 df_small = df[::100].reset_index(drop=True)
-```
 
-# 기말고사1-(1),(2)
 
-```{python}
-#| title: 요일,시간에 따른 평균속력 시각화 
 tidydata = df.pivot_table(
     index = 'pickup_hour',
     columns = 'dayofweek',
     values = 'speed',
     aggfunc = 'mean'
 ).stack().reset_index().rename({0:'speed_mean'},axis=1)
+
 fig1=px.density_heatmap(
     data_frame=tidydata,
     x='pickup_hour',
@@ -56,17 +52,14 @@ fig1=px.density_heatmap(
     nbinsx=24,
     nbinsy=7,
     height=300
-)
-fig1.update_layout({
+).update_layout({
     'xaxis': {'anchor': 'y', 'title': {'text': 'pickup 시간'}},
     'yaxis': {'anchor': 'x','tickvals': [0, 1, 2, 3, 4, 5, 6],'ticktext': ['월', '화', '수', '목', '금', '토', '일'], 'title': {'text': '요일'}},
     'coloraxis_colorbar': {'title': {'text': '평균속력'}}
 })
-fig1.show()
-```
 
-```{python}
-#| title: 요일,시간에 따른 평균이동거리 시각화 
+
+
 tidydata2 = df.pivot_table(
     index = 'pickup_hour',
     columns = 'dayofweek',
@@ -81,20 +74,14 @@ fig2=px.density_heatmap(
     nbinsx=24,
     nbinsy=7,
     height=300
-)
-fig2.update_layout({
+).update_layout({
     'xaxis': {'anchor': 'y', 'title': {'text': 'pickup 시간'}},
     'yaxis': {'anchor': 'x','tickvals': [0, 1, 2, 3, 4, 5, 6],'ticktext': ['월', '화', '수', '목', '금', '토', '일'], 'title': {'text': '요일'}},
     'coloraxis_colorbar': {'title': {'text': '평균이동거리'}}
 })
 
-fig2.show()
-```
 
-# 기말고사1-(3)
 
-```{python}
-#| title: 속력별 경로 시각화
 pcol = ['pickup_datetime', 'pickup_longitude', 'pickup_latitude', 'pickup_hour']
 dcol = ['dropoff_datetime', 'dropoff_longitude', 'dropoff_latitude', 'dropoff_hour']
 def transform(df):
@@ -150,6 +137,56 @@ fig3.update_traces(
     },
     opacity=0.8
 )
+
+
+
+
+
+```
+
+# 기말고사1-(1),(2)
+
+```{python}
+#| title: 요일,시간에 따른 평균속력 시각화        
+fig1.show()
+```
+
+```{python}
+#| title: 요일,시간에 따른 평균이동거리 시각화        
+fig2.show()
+```
+
+# 기말고사1-(3)
+
+```{python}
+#| title: 속력별 경로 시각화
 fig3.show()
 ```
-````
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
