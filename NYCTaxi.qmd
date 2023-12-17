@@ -80,8 +80,6 @@ fig2=px.density_heatmap(
     'coloraxis_colorbar': {'title': {'text': '평균이동거리'}}
 })
 
-
-
 pcol = ['pickup_datetime', 'pickup_longitude', 'pickup_latitude', 'pickup_hour']
 dcol = ['dropoff_datetime', 'dropoff_longitude', 'dropoff_latitude', 'dropoff_hour']
 def transform(df):
@@ -91,9 +89,12 @@ def transform(df):
 df_left = df_small.drop(pcol+dcol,axis=1)
 df_right = pd.concat([transform(df) for i, df in df_small.groupby('id')]).reset_index(drop=True)
 df_feature_small2 = df_left.merge(df_right)
+
 tidydata3 = df_feature_small2.assign(
-    speed_cut = pd.qcut(df_feature_small2.speed,4,)
+    speed_cut = pd.qcut(df_feature_small2.speed,4,labels=['매우느림','조금느림','조금빠름','매우빠름'])
 ).sort_values('speed_cut')
+
+
 fig3 = px.line_mapbox(
     data_frame=tidydata3,
     lat = 'latitude',
@@ -120,16 +121,11 @@ scatter_data = px.scatter_mapbox(
 for sd in scatter_data:
     fig3.add_trace(sd)
 
-labels = {'(-0.001, 2.63e-05]': '매우느림',
-          '(2.63e-05, 3.63e-05]': '조금느림',
-          '(3.63e-05, 4.78e-05]': '조금빠름',
-          '(4.78e-05, 0.000109]': '매우빠름'}
-
 for trace in fig3.data :
     if trace.mode == 'lines':
-      trace['name']=labels[trace['name']] + " (path)"
+      trace['name']=trace['name'] + " (path)"
     else:
-      trace['name']=labels[trace['name']] + " (pickup/drpoff)"
+      trace['name']=trace['name'] + " (pickup/drpoff)"
 
 fig3.update_traces(
     line={
@@ -137,8 +133,6 @@ fig3.update_traces(
     },
     opacity=0.8
 )
-
-
 
 
 
