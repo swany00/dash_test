@@ -5,3 +5,5 @@
 - <https://swany00.github.io/dash_test/Energy.html>
 - 자료는 뉴옥 택시 데이터
 - <https://swany00.github.io/dash_test/NYCTaxi.html>
+- 자료는 뉴옥 택시 데이터
+- <https://swany00.github.io/dash_test/hello.html>
